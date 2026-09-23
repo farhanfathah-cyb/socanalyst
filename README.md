@@ -1,5 +1,7 @@
 # Farhan Fathah — Cybersecurity Portfolio
 
+![Digital cybersecurity portrait of Farhan Fathah](dist/assets/farhan-cyber-portrait.png)
+
 > IT & NOC operations professional transitioning into a SOC Analyst role, with hands-on experience building and investigating a multi-layer home security lab.
 
 **UAE · Open to SOC Analyst L1 / Cybersecurity Operations opportunities**
