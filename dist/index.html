@@ -15,7 +15,7 @@
     <a class="brand" href="#top" aria-label="Farhan Fathah home"><span>FF</span><strong>Farhan Fathah</strong></a>
     <button class="menu" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav id="nav" aria-label="Primary navigation">
-      <a href="#projects">Projects</a><a href="#lab">Lab</a><a href="#skills">Skills</a><a href="#roadmap">Next plans</a>
+      <a href="#journey">Journey</a><a href="#projects">Projects</a><a href="#lab">Lab</a><a href="#skills">Skills</a><a href="#roadmap">Next plans</a>
     </nav>
   </header>
 
@@ -35,6 +35,10 @@
     <section class="transition wrap">
       <div><p class="eyebrow">The transition</p><h2>Operations experience, redirected toward defense.</h2></div>
       <p>My background includes enterprise IT support, NOC monitoring, identity, networking, endpoint administration, and incident ownership. I now apply that operational context to security monitoring: validating evidence, understanding business impact, and escalating with clear next actions.</p>
+    </section>
+
+    <section id="journey" aria-label="My animated cybersecurity learning journey" style="padding:44px 0;border-bottom:1px solid #1c3448">
+      <iframe id="journey-frame" src="journey.html" title="Farhan's interactive IT support to cybersecurity journey" style="display:block;width:100%;height:980px;border:0" loading="lazy"></iframe>
     </section>
 
     <section id="projects" class="section wrap">
@@ -81,5 +85,13 @@
   </main>
   <footer><div class="wrap"><strong>Farhan Fathah</strong><span>Cybersecurity portfolio · UAE</span><span>Built around real lab progress</span></div></footer>
   <script src="script.js"></script>
+  <script>
+    window.addEventListener('message', function(event) {
+      const frame = document.getElementById('journey-frame');
+      if (event.source !== frame.contentWindow || !event.data || event.data.type !== 'farhan-journey-height') return;
+      const height = Number(event.data.height);
+      if (Number.isFinite(height) && height > 100 && height < 10000) frame.style.height = Math.ceil(height) + 'px';
+    });
+  </script>
 </body>
 </html>
