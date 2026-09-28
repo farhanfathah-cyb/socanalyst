@@ -1,0 +1,6 @@
+.site-header nav{gap:15px;align-items:center}
+.site-header nav a{font-size:.81rem;white-space:nowrap}
+.site-header nav .cv-download{padding:8px 12px;border:1px solid #5ee7ff;border-radius:7px;color:#5ee7ff}
+.site-header nav .contact-link{padding:8px 12px;background:#5ee7ff;color:#06101d;border-radius:7px;font-weight:700}
+.site-header nav a:focus-visible{outline:2px solid #5ee7ff;outline-offset:4px}
+@media(max-width:1100px){.site-header .menu{display:block}.site-header nav{display:none;position:absolute;right:20px;top:60px;flex-direction:column;align-items:stretch;background:#0b1928;border:1px solid #1c3448;padding:18px;width:210px;max-height:calc(100vh - 90px);overflow:auto;border-radius:10px;gap:12px}.site-header nav.open{display:flex}.site-header nav a{font-size:.9rem}.site-header nav .cv-download,.site-header nav .contact-link{text-align:center}}
