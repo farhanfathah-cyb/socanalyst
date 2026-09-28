@@ -18,3 +18,7 @@
 .career-client{display:flex;align-items:center;gap:14px;border-top:1px solid #1c3448;margin-top:18px;padding-top:14px;color:#a6bbcd;font-size:.78rem}
 .career-client img{width:85px;height:48px;object-fit:contain;filter:grayscale(1) contrast(2) invert(1);mix-blend-mode:screen;opacity:.75}
 @media(max-width:650px){.career-timeline{padding-left:20px}.career-entry{grid-template-columns:1fr;gap:18px;padding:22px}.career-entry::before{left:-27px;top:33px}.career-logo{width:135px;min-height:76px;padding:12px}.career-logo img{height:48px}.career-body h3{font-size:1.3rem}.career-role{font-size:.91rem}}
+.career-logo img[src$="enoc.png"] {
+  filter: none;
+  opacity: 1;
+}
