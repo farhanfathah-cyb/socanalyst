@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Farhan Fathah's SSH authentication lab: detection logic, evidence review and SOC triage decisions.">
+  <title>SSH investigation | Farhan Fathah</title>
+  <link rel="stylesheet" href="ssh-investigation.css">
+  <script src="ssh-investigation.js" defer></script>
+</head>
+<body>
+  <header class="case-header"><a href="index.html#projects">← Back to portfolio</a><span>Farhan Fathah</span></header>
+  <main>
+    <section class="case-intro">
+      <p class="eyebrow">Investigation walkthrough / 01</p>
+      <h1>When failed logins<br>become a signal.</h1>
+      <p class="lead">An SSH authentication lab using Linux logs and Splunk, with a focus on the decisions behind alert triage.</p>
+      <div class="chips"><span>Independent home lab</span><span>Splunk · Linux · SSH</span><span>Detection &amp; triage</span></div>
+      <p class="scope">Lab activity: SSH login attempts and log forwarding to Splunk. This walkthrough explains detection and investigation logic; raw event exports and dashboard screenshots are not included yet.</p>
+    </section>
+    <div class="case-tabs" aria-label="Investigation stages" hidden>
+      <button id="tab-alert" type="button" aria-controls="panel-alert">01 <span>Alert</span></button>
+      <button id="tab-evidence" type="button" aria-controls="panel-evidence">02 <span>Evidence</span></button>
+      <button id="tab-investigation" type="button" aria-controls="panel-investigation">03 <span>Investigation</span></button>
+      <button id="tab-conclusion" type="button" aria-controls="panel-conclusion">04 <span>Conclusion</span></button>
+    </div>
+    <section class="case-panel" id="panel-alert" aria-labelledby="tab-alert">
+      <p class="eyebrow">01 / Alert</p><h2>Repeated failures are a starting point.</h2>
+      <p>Group SSH failed-password events by source IP and destination host. Flag five or more events within a five-minute bucket for review.</p>
+      <div class="query-heading"><h3>Detection search</h3><button type="button" id="copy-query" hidden>Copy SPL</button></div>
+      <pre><code id="spl-query">index=* "Failed password"
+| rex field=_raw "from (?&lt;src_ip&gt;\d{1,3}(?:\.\d{1,3}){3})"
+| where isnotnull(src_ip)
+| bin _time span=5m
+| stats count as failed_events by _time src_ip host
+| where failed_events &gt;= 5
+| sort -_time</code></pre>
+      <p id="copy-status" role="status" aria-live="polite"></p>
+      <p class="note">Lab starting point: use a specific index and sourcetype in production. This IPv4 extraction and fixed time-bucket threshold can miss other formats or attempts split across bucket boundaries.</p>
+      <div class="decision"><strong>My first question</strong><p>Is this expected activity, a configuration issue, or an unauthorized attempt?</p></div>
+    </section>
+    <section class="case-panel" id="panel-evidence" aria-labelledby="tab-evidence">
+      <p class="eyebrow">02 / Evidence</p><h2>Read the events behind the count.</h2>
+      <p>An aggregate alert does not establish intent or compromise. I would return to the underlying authentication records and correlate the following fields.</p>
+      <div class="evidence-grid">
+        <article><span>Who</span><h3>Source &amp; account</h3><p>Identify the source device owner, targeted usernames and whether the accounts are privileged.</p></article>
+        <article><span>Where</span><h3>Destination host</h3><p>Confirm the asset owner, host purpose and whether remote access from this source is expected.</p></article>
+        <article><span>When</span><h3>Event timeline</h3><p>Check timestamps, timezone and nearby events—not only the alert's five-minute bucket.</p></article>
+        <article><span>What followed</span><h3>Success &amp; session activity</h3><p>Look for successful authentication and correlate the same source, account and host. Check available session and endpoint telemetry.</p></article>
+      </div>
+      <div class="decision"><strong>Evidence status</strong><p>Raw event exports and screenshots are pending publication. No event counts, attacker identities or compromise outcomes are claimed here.</p></div>
+    </section>
+    <section class="case-panel" id="panel-investigation" aria-labelledby="tab-investigation">
+      <p class="eyebrow">03 / Investigation</p><h2>Move from pattern to context.</h2>
+      <ol class="triage-list">
+        <li><h3>Validate the trigger</h3><p>Check the original logs, ingestion quality, duplicate events and the alert time window.</p></li>
+        <li><h3>Confirm expected access</h3><p>Check approved testing, maintenance, service credentials and the source device with its owner.</p></li>
+        <li><h3>Scope the activity</h3><p>Search for other accounts and hosts touched by the same source. Many targeted accounts can suggest spraying, but logs alone may not reveal the passwords attempted.</p></li>
+        <li><h3>Check what happened next</h3><p>Correlate successful logins, privilege changes and unusual activity using available authentication and endpoint evidence.</p></li>
+      </ol>
+      <details class="analyst-detail"><summary>Why a successful login needs context</summary><p>A legitimate user can mistype a password and then log in successfully. The sequence becomes more concerning when the source is unrecognized, the account is privileged, or subsequent activity is unusual.</p></details>
+    </section>
+    <section class="case-panel" id="panel-conclusion" aria-labelledby="tab-conclusion">
+      <p class="eyebrow">04 / Conclusion</p><h2>Escalate on evidence and impact.</h2>
+      <p>The response depends on the investigation. These are decision criteria, not a claim that this lab established a compromise.</p>
+      <div class="outcomes">
+        <article><span>Expected activity</span><h3>Document &amp; tune</h3><p>If the owner confirms authorized activity and the evidence supports it, document the explanation. Tune only with approval and preserve visibility.</p></article>
+        <article><span>Unauthorized attempts</span><h3>Scope &amp; escalate</h3><p>Document the affected hosts and accounts, assess severity, and escalate according to the response playbook. Failed attempts alone do not prove access.</p></article>
+        <article><span>Possible compromise</span><h3>Prioritize response</h3><p>Escalate suspicious successful access or follow-on activity promptly. Recommend account or host containment for an authorized responder.</p></article>
+      </div>
+      <div class="decision"><strong>What I would hand over</strong><p>Trigger and timeframe · affected assets and accounts · relevant event references · searches performed · scope and confidence · recommended next action.</p></div>
+      <a class="return-link" href="index.html#projects">Return to my portfolio →</a>
+    </section>
+    <nav class="step-navigation" aria-label="Move between investigation stages" hidden><button type="button" id="previous-stage">← Previous</button><span id="stage-status" aria-live="polite"></span><button type="button" id="next-stage">Next →</button></nav>
+  </main>
+  <footer>Farhan Fathah · Cybersecurity portfolio · Independent learning</footer>
+</body>
+</html>
