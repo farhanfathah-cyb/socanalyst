@@ -45,11 +45,26 @@ if (typeof document !== 'undefined') (() => {
   const status = panel.querySelector('#experience-query-status');
   const feedback = panel.querySelector('#experience-copy-status');
   const empty = section.querySelector('.experience-empty');
+  const shortcuts = [];
+  panel.querySelectorAll('.query-example').forEach((example, index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = records[index].company;
+    button.setAttribute('aria-label', `Search ${example.querySelector('strong').textContent}`);
+    button.addEventListener('click', () => {
+      input.value = example.querySelector('code').textContent;
+      feedback.textContent = '';
+      run();
+    });
+    panel.querySelector('.query-shortcuts').append(button);
+    shortcuts.push(button);
+  });
   function run() {
     let fields;
     try { fields = parseExperienceQuery(input.value); }
     catch (error) { input.setAttribute('aria-invalid', 'true'); status.textContent = error.message; status.classList.add('query-error'); return; }
     input.removeAttribute('aria-invalid'); status.classList.remove('query-error');
+    shortcuts.forEach((button, index) => button.setAttribute('aria-pressed', String(fields.company?.toLowerCase() === records[index].company.toLowerCase())));
     let count = 0;
     entries.forEach((card, i) => { const match = experienceMatches(records[i], fields); card.hidden = !match; if (match) count++; });
     status.textContent = `${count} ${count === 1 ? 'experience result' : 'experience results'}`;
