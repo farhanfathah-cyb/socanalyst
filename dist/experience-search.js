@@ -46,13 +46,13 @@ if (typeof document !== 'undefined') (() => {
   const feedback = panel.querySelector('#experience-copy-status');
   const empty = section.querySelector('.experience-empty');
   const shortcuts = [];
-  panel.querySelectorAll('.query-example').forEach((example, index) => {
+  records.forEach((record, index) => {
     const button = document.createElement('button');
     button.type = 'button';
     button.textContent = records[index].company;
-    button.setAttribute('aria-label', `Search ${example.querySelector('strong').textContent}`);
+    button.setAttribute('aria-label', `Search ${record.company} experience`);
     button.addEventListener('click', () => {
-      input.value = example.querySelector('code').textContent;
+      input.value = `index=experience company="${record.company}" start_year=${record.start_year}` + (record.current ? ' current=true' : ` end_year=${record.end_year}`);
       feedback.textContent = '';
       run();
     });
@@ -75,21 +75,6 @@ if (typeof document !== 'undefined') (() => {
     if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') { event.preventDefault(); run(); }
   });
   panel.querySelector('.experience-show-all').addEventListener('click', () => { input.value = 'index=experience'; run(); });
-  panel.querySelectorAll('.query-example').forEach(example => {
-    const code = example.querySelector('code');
-    example.querySelector('.query-use').addEventListener('click', () => {
-      input.value = code.textContent; feedback.textContent = 'Query loaded. Select Search to see the result.';
-      input.focus(); input.scrollIntoView({ behavior: 'auto', block: 'nearest' });
-    });
-    example.querySelector('.query-copy').addEventListener('click', async () => {
-      try { await navigator.clipboard.writeText(code.textContent); feedback.textContent = 'Query copied. Paste it in the search box and select Search.'; }
-      catch {
-        const range = document.createRange(); range.selectNodeContents(code);
-        const selection = window.getSelection(); selection.removeAllRanges(); selection.addRange(range);
-        feedback.textContent = 'Copy the highlighted query with your browser, or select Use query.';
-      }
-    });
-  });
   section.classList.add('experience-search-ready');
   panel.hidden = false;
   run();
