@@ -1,0 +1,33 @@
+#experience .experience-search-panel{border:1px solid #29495c;border-radius:12px;background:#0a1927;overflow:hidden;margin:0 0 28px}
+#experience .search-app-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 22px;border-bottom:1px solid #29495c;background:#0f2535}
+#experience .search-app-header strong{font-size:.95rem;font-weight:600;color:#eaf5ff}
+#experience .search-app-header span{color:#9bb0c4;font-size:.72rem}
+#experience .search-app-header b{color:#7bd99b;font-weight:700;margin-right:9px}
+#experience .experience-search-panel form{padding:22px}
+#experience .experience-search-panel label{display:block;color:#c6d7e6;font-size:.82rem;margin-bottom:9px}
+#experience #experience-query{display:block;width:100%;resize:vertical;min-height:92px;background:#050e18;border:1px solid #365669;border-radius:7px;color:#a7edc0;padding:14px 16px;font: .88rem/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;outline-offset:3px}
+#experience #experience-query:focus{outline:2px solid #5ee7ff}
+#experience .experience-search-panel button{font:inherit;font-size:.8rem;min-height:42px;padding:9px 14px;border-radius:6px;border:1px solid #345468;background:#102a3c;color:#cfe1ec;cursor:pointer}
+#experience .experience-search-panel button:focus-visible{outline:2px solid #5ee7ff;outline-offset:3px}
+#experience .experience-search-panel button:hover{border-color:#7bd99b;color:#fff}
+#experience .query-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}
+#experience .query-actions .experience-run{background:#7bd99b;color:#06101d;border-color:#7bd99b;font-weight:700;padding-inline:23px}
+#experience .query-help{font-size:.74rem;color:#9bb0c4;margin:12px 0 0}
+#experience .query-library{padding:0 22px 22px}
+#experience .query-library summary{cursor:pointer;color:#b8d9e9;font-size:.86rem;padding:10px 0}
+#experience .query-example{padding:15px 0;border-top:1px solid #223d50}
+#experience .query-example strong{display:block;color:#eaf5ff;font-size:.82rem;font-weight:600;margin-bottom:8px}
+#experience .query-example code{display:block;background:#061320;padding:10px 12px;border-radius:6px;color:#a7edc0;overflow-wrap:anywhere;font:.76rem/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+#experience .query-example-buttons{display:flex;gap:8px;margin-top:9px}
+#experience .search-feedback{margin:0;padding:0 22px 16px;font-size:.82rem;color:#7bd99b}
+#experience .search-feedback:empty{padding:0}
+#experience .search-feedback.query-error{color:#ffc18c}
+#experience [hidden]{display:none!important}
+#experience.experience-search-ready .career-timeline{border:0;padding:0;list-style:none}
+#experience.experience-search-ready .career-entry{border-radius:8px;padding:24px;margin-bottom:12px;background:#0a1927;border-color:#29495c}
+#experience.experience-search-ready .career-entry::before{display:none}
+#experience.experience-search-ready .career-body h3::before{content:"company ";display:block;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.7rem;color:#7bd99b;letter-spacing:.07em;font-weight:400;margin-bottom:5px}
+#experience.experience-search-ready .career-body h3{margin-top:12px}
+#experience .experience-empty{border:1px dashed #345468;border-radius:8px;padding:26px;color:#9bb0c4;font-size:.92rem}
+@media(max-width:650px){#experience .search-app-header{align-items:flex-start;flex-direction:column;padding:16px}#experience .experience-search-panel form{padding:16px}#experience .query-library{padding:0 16px 16px}#experience .search-feedback{padding-inline:16px}#experience #experience-query{font-size:.8rem}#experience.experience-search-ready .career-entry{padding:22px}}
+@media print{#experience .experience-search-panel,#experience .experience-empty{display:none}#experience.experience-search-ready .career-entry[hidden]{display:grid!important}}

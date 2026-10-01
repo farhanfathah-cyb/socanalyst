@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="experience.css">
   <link rel="stylesheet" href="soc-navigation.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23071320'/%3E%3Cpath d='M32 9 51 16v14c0 12-7.7 21-19 25C20.7 51 13 42 13 30V16l19-7Z' fill='none' stroke='%235ee7ff' stroke-width='4'/%3E%3Cpath d='m22 32 7 7 14-16' fill='none' stroke='%23f5a524' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="experience-deck.css">
+  <link rel="stylesheet" href="experience-search.css">
 </head>
 <body>
   <header class="site-header">
@@ -90,6 +90,14 @@
         <h2 id="experience-title">The experience behind my security focus.</h2>
         <p>Enterprise support, identity administration and infrastructure monitoring — a practical foundation for cybersecurity operations.</p>
       </div>
+      <div class="experience-search-panel" hidden>
+        <div class="search-app-header"><strong><b>&gt;_</b>Search experience</strong><span>Local portfolio demo · SPL-style queries</span></div>
+        <form><label for="experience-query">Paste an experience query</label><textarea id="experience-query" rows="3" spellcheck="false" autocapitalize="off" aria-describedby="experience-query-help">index=experience</textarea><div class="query-actions"><button class="experience-run" type="submit">Search →</button><button class="experience-show-all" type="button">Show all</button></div><p class="query-help" id="experience-query-help">Use the listed queries below. Start/end years match the role dates exactly. Ctrl/⌘ + Enter runs the search.</p></form>
+        <details class="query-library" open><summary>Copy a query by company and period</summary><div class="query-example"><strong>ENOC · 2022–Present</strong><code>index=experience company=&quot;ENOC&quot; start_year=2022 current=true</code><div class="query-example-buttons"><button type="button" class="query-copy" aria-label="Copy ENOC · 2022–Present query">Copy query</button><button type="button" class="query-use" aria-label="Use ENOC · 2022–Present query">Use query</button></div></div><div class="query-example"><strong>Expo 2020 Dubai · 2021–2022</strong><code>index=experience company=&quot;Expo 2020 Dubai&quot; start_year=2021 end_year=2022</code><div class="query-example-buttons"><button type="button" class="query-copy" aria-label="Copy Expo 2020 Dubai · 2021–2022 query">Copy query</button><button type="button" class="query-use" aria-label="Use Expo 2020 Dubai · 2021–2022 query">Use query</button></div></div><div class="query-example"><strong>KPFF Global · 2015–2020</strong><code>index=experience company=&quot;KPFF Global&quot; start_year=2015 end_year=2020</code><div class="query-example-buttons"><button type="button" class="query-copy" aria-label="Copy KPFF Global · 2015–2020 query">Copy query</button><button type="button" class="query-use" aria-label="Use KPFF Global · 2015–2020 query">Use query</button></div></div><div class="query-example"><strong>Infosys Ltd · 2013–2014</strong><code>index=experience company=&quot;Infosys Ltd&quot; start_year=2013 end_year=2014</code><div class="query-example-buttons"><button type="button" class="query-copy" aria-label="Copy Infosys Ltd · 2013–2014 query">Copy query</button><button type="button" class="query-use" aria-label="Use Infosys Ltd · 2013–2014 query">Use query</button></div></div></details>
+        <p class="search-feedback" id="experience-copy-status" role="status"></p>
+        <p class="search-feedback" id="experience-query-status" role="status" aria-live="polite"></p>
+      </div>
+      <p class="experience-empty" hidden>No matching experience. Try a listed query or select Show all.</p>
       <ol class="career-timeline" aria-label="Professional experience, most recent first">
         <li class="career-entry">
           <div class="career-logo"><img
@@ -163,6 +171,6 @@
       if (Number.isFinite(height) && height > 100 && height < 10000) frame.style.height = Math.ceil(height) + 'px';
     });
   </script>
-  <script src="experience-deck.js" defer></script>
+  <script src="experience-search.js" defer></script>
 </body>
 </html>
